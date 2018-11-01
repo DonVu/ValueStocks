@@ -7,6 +7,7 @@ def stocks_api(stock_symbol):
     api_response = requests.get(url + stock_symbol)
     
     if api_response.status_code == requests.codes.ok:
+        # TODO(don): Remove the debugging print statement after testing function
         print(api_response.text)
 
 if __name__ == "__main__":
