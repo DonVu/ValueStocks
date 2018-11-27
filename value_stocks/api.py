@@ -3,16 +3,25 @@ import json
 
 def stocks_api(stock_symbol):
     # The api fetching stock data
-    url = 'https://financialmodelingprep.com/api/financials/income-statement/'
+    url = 'https://financialmodelingprep.com/api/financials/'
 
-    api_response = requests.get(url + stock_symbol)
+    api_income_statement = requests.get(url + 'income-statement/' +
+        stock_symbol)
+    api_balance_statement = requests.get(url + 'balance-sheet-statement/' +
+        stock_symbol)
+    api_cash_statement = requests.get(url + 'cash-flow-statement/' +
+        stock_symbol)  
     
+
+def response_processing(api_response):
     if api_response.status_code == requests.codes.ok:
-        # TODO(don): Remove the debugging print statement after testing function
         stock_text = api_response.text
         edited_stock_text = stock_text.strip('<pre>')
-        example = json.loads(edited_stock_text)
-        #print(example['GOOG']['Revenue']['2013-12'])
+        result = json.loads(edited_stock_text)
+
+        return result
+    else:
+        print('Error finding stock or api source')
 
 if __name__ == "__main__":
     stocks_api('GOOG')
