@@ -10,11 +10,25 @@ class StockData(object):
                              flow statement.
     """
     def __init__(self, balance_sheet, income_statement,
-            cash_flow_statement):
+            cash_flow_statement, stock_name):
         """Inits StockData with financial data passed in"""
         self._balance_sheet = balance_sheet
         self._income_statement = income_statement
         self._cash_flow_statement = cash_flow_statement
+        self._stock_name = stock_name
+
+    @property
+    def stock_name(self):
+        """Returns the stock ticker name for the company
+
+        Returns:
+            a string representing the stock ticker name
+        """
+        return self._stock_name
+
+    @stock_name.setter
+    def stock_name(self, ticker):
+        self._stock_name = ticker
 
     @property
     def balance_sheet(self):
@@ -64,16 +78,20 @@ class StockData(object):
 if __name__ == "__main__":
     example = StockData({'balance sheet' : 'test1'},
             {'income statement' : 'test2'},
-            {'cash flow statement' : 'test3'})
+            {'cash flow statement' : 'test3'},
+            'GOOG')
     
     print(example.balance_sheet)
     print(example.income_statement)
     print(example.cash_flow_statement)
+    print(example.stock_name)
 
     example.balance_sheet = {'balance new' : 'new1'}
     example.income_statement = {'income new' : 'new2'}
     example.cash_flow_statement = {'cash new' : 'new3'}
+    example.stock_name = 'AAPL'
 
     print(example.balance_sheet)
     print(example.income_statement)
     print(example.cash_flow_statement)
+    print(example.stock_name)
