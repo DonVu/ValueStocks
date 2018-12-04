@@ -39,3 +39,4 @@ if __name__ == "__main__":
     print(example_data.balance_sheet)
     print(example_data.income_statement)
     print(example_data.cash_flow_statement)
+    print(example_data.stock_name)
