@@ -18,7 +18,7 @@ def stocks_api(stock_symbol):
     balance_statement = response_processing(api_balance_statement)
     cash_statement = response_processing(api_cash_statement)
 
-    result = StockData(income_statement, balance_statement,
+    result = StockData(balance_statement, income_statement,
             cash_statement, stock_symbol)
 
     return result
