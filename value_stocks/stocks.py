@@ -9,5 +9,8 @@ def main():
     
     stock_rating = ai_heuristic(company_data)
 
+    print("The company stock has a score of: %i (The higher the number,
+            the better the investment)" % stock_rating)
+
 if __name__ == "__main__":
     main()
