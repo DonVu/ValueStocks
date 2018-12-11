@@ -18,6 +18,17 @@ def ai_heuristic(company):
         print("Working capital is negative. Not enough to pay short term debt(-10)")
 
 
+    """ Debt to Equity ratio """
+    debt_to_equity = (float(company.balance_sheet[company.stock_name]['Total liabilities']['2017-09']) /
+        float(company.balance_sheet[company.stock_name]["Total stockholders' equity"]['2017-09']))
+    if (debt_to_equity > 0.50):
+        stock_rating += 10
+
+        print("Debt to Equity is higher than 50%% at: %.2f%% (+10)" %(debt_to_equity))
+    else:
+        stock_rating -= 40
+        print("Debt to Equity is below average of 50%(-40)")
+
     """ Return On Equity ratio """
     return_on_equity = (float(company.income_statement[company.stock_name]['Net income']['2017-09']) /
         float(company.balance_sheet[company.stock_name]["Total stockholders' equity"]['2017-09']))
