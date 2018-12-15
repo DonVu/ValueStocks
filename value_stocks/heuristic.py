@@ -1,15 +1,25 @@
 import json
+from datetime import datetime
 
 from api import stocks_api
 
 def ai_heuristic(company):
     stock_rating = 0
 
+    """ 
+        To find the latest year, The keys for the dictionary
+        are compared to each other for use in the ratios.
+    """
+    latest_date = '2013-09'
+    for key in company.balance_sheet[company.stock_name]['Total current assets']:
+        if datetime.strptime(latest_date, '%Y-%d') < datetime.strptime(key, '%Y-%d'):
+            latest_date = key
+
     """ Balance sheet ratios """
 
     """ Working Capital """
-    if (int(company.balance_sheet[company.stock_name]['Total current assets']['2017-09']) >
-            int(company.balance_sheet[company.stock_name]['Total current liabilities']['2017-09'])):
+    if (int(company.balance_sheet[company.stock_name]['Total current assets'][latest_date]) >
+            int(company.balance_sheet[company.stock_name]['Total current liabilities'][latest_date])):
         stock_rating += 10
 
         print("Working capital is sufficient to pay short term debt(+10)")
@@ -19,8 +29,8 @@ def ai_heuristic(company):
 
 
     """ Debt to Equity ratio """
-    debt_to_equity = (float(company.balance_sheet[company.stock_name]['Total liabilities']['2017-09']) /
-        float(company.balance_sheet[company.stock_name]["Total stockholders' equity"]['2017-09']))
+    debt_to_equity = (float(company.balance_sheet[company.stock_name]['Total liabilities'][latest_date]) /
+        float(company.balance_sheet[company.stock_name]["Total stockholders' equity"][latest_date]))
     if (debt_to_equity > 0.50):
         stock_rating += 10
 
@@ -30,8 +40,8 @@ def ai_heuristic(company):
         print("Debt to Equity is below average of 50%(-40)")
 
     """ Return On Equity ratio """
-    return_on_equity = (float(company.income_statement[company.stock_name]['Net income']['2017-09']) /
-        float(company.balance_sheet[company.stock_name]["Total stockholders' equity"]['2017-09']))
+    return_on_equity = (float(company.income_statement[company.stock_name]['Net income'][latest_date]) /
+        float(company.balance_sheet[company.stock_name]["Total stockholders' equity"][latest_date]))
     if (return_on_equity > 0.10):
         stock_rating += 30
 
